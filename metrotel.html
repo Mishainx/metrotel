@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Image with Points</title>
+    <style>
+        #image-container {
+            position: relative;
+            width: 100%;
+            max-width: 1600px;
+            height: auto;
+            margin: 0 auto;
+        }
+        #interactive-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .point {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #00CFFF;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .highlight {
+            color: #00CFFF;
+        }
+        #reference-list {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1em;
+            background-color: black; /* Adjust font size for responsiveness */
+        }
+        li {
+            padding: 5px 0;
+            cursor: pointer;
+            color: white;
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img id="interactive-image" src="./metrotel.jpg" alt="Interactive Image">
+        <ul id="reference-list">
+            <li data-point="0">1- La vuelta de la esquina</li>
+            <li data-point="1">2- La casa de tu vieja</li>
+            <li data-point="2">3- Narnia</li>
+        </ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
