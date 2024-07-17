@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Añadir puntos iniciales (puedes añadir tantos como necesites)
     addPoint(55, 8, 0); // Coordenadas relativas al contenedor (en porcentajes) y su índice en la lista
-    addPoint(40, 45, 1);
+    addPoint(82, 45, 1);
     addPoint(76, 43, 2);
 
     // Evento para resaltar una referencia al hacer clic en la lista
@@ -50,6 +50,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 point.classList.remove('highlight');
             }
             points[pointIndex].classList.add('highlight');
+        });
+
+        // Evento para cambiar el color del punto al hacer hover en la referencia
+        referenceList[i].addEventListener('mouseenter', function () {
+            const pointIndex = this.dataset.point;
+            const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+            point.style.color = 'black';
+        });
+
+        // Evento para volver al color original al salir del hover en la referencia
+        referenceList[i].addEventListener('mouseleave', function () {
+            const pointIndex = this.dataset.point;
+            const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+            point.style.color = 'white';
         });
     }
 

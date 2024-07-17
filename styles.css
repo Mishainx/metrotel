@@ -1,0 +1,59 @@
+#image-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    margin: 0 auto;
+}
+#interactive-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.point {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #00CFFF;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+.highlight {
+    color: #00CFFF;
+}
+#reference-list {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1em;
+    background-color: black; /* Adjust font size for responsiveness */
+}
+li {
+    padding: 5px 0;
+    cursor: pointer;
+    color: white;
+}
