@@ -36,21 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Evento para resaltar una referencia al hacer clic en la lista
     for (let i = 0; i < referenceList.length; i++) {
-        referenceList[i].addEventListener('click', function () {
-            // Resaltar la referencia seleccionada
-            for (let j = 0; j < referenceList.length; j++) {
-                referenceList[j].classList.remove('highlight');
-            }
-            this.classList.add('highlight');
-
-            // Opcional: Hacer algo con el punto correspondiente
-            const pointIndex = this.dataset.point;
-            const points = document.querySelectorAll('.point');
-            for (let point of points) {
-                point.classList.remove('highlight');
-            }
-            points[pointIndex].classList.add('highlight');
-        });
 
         // Evento para cambiar el color del punto al hacer hover en la referencia
         referenceList[i].addEventListener('mouseenter', function () {
