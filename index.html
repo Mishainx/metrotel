@@ -6,76 +6,91 @@
     <title>Interactive Map</title>
     <style>
         /* Estilos CSS */
-        #image-container {
-            position: relative;
-            width: 100%;
-            max-width: 1920px;
-            background-color: #f0f0f0; /* Fondo temporal para verificar visibilidad */
-        }
-        #image-container img {
-            width: 100%;
-            height: auto;
-        }
-        .point {
-            position: absolute;
-            background-color: rgb(88, 161, 239); /* Tono celeste */
-            color: white;
-            border-radius: 50%;
-            width: 2vw; /* Tamaño base del punto */
-            height: 2vw; /* Tamaño base del punto */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 1em; /* Usa em para escalar con el contenedor */
-            box-shadow: 0 0 15px rgb(57, 109, 165); /* Borde irradiado en tono celeste más visible */
-            z-index: 10; /* Asegura que el punto esté por encima de otros elementos */
-            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transición suave */
-        }
-        .point:hover {
-            background-color: rgb(57, 109, 165);
-            box-shadow: 0 0 25px rgb(57, 109, 165);
-            transform: scale(1.1); /* Escala ligeramente el punto en hover */
-        }
-        .highlight {
-            background-color: rgb(57, 109, 165);
-            color: white;
-            transition: background-color 0.3s ease; /* Transición suave para el resaltado */
-        }
-        #reference-list {
-            position: absolute;
-            top: 1vw;
-            right: 2.5vw;
-            background-color: rgba(0, 0, 0, 0); /* Fondo transparente */
-            padding: 0.2vw;
-            border-radius: 0.5vw;
-            list-style: none;
-            margin: 0;
-            font-size: 0.3em; /* Tamaño de letra más pequeño usando em */
-            max-height: 20vh; /* Altura máxima para la lista */
-            transition: opacity 0.3s ease; /* Transición suave para la opacidad */
-        }
-        #reference-list li {
-            padding: 0.1vw 0.2vw; /* Menos separación */
-            cursor: pointer;
-            color: white; /* Color del texto en blanco */
-            transition: background-color 0.3s ease;
-            font-size: 0.1em; 
-        }
-        #reference-list li:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+       /* Estilos CSS */
+#image-container {
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+    background-color: #f0f0f0; /* Fondo temporal para verificar visibilidad */
+    overflow: hidden; /* Asegura que nada se desborde del contenedor */
+}
 
-        @media (max-width: 768px) {
-            .point {
-                width: 4vw; /* Ajusta el tamaño del punto para pantallas pequeñas */
-                height: 4vw; /* Ajusta el tamaño del punto para pantallas pequeñas */
-                font-size: 0.8em; /* Ajusta el tamaño de la fuente */
-            }
-            #reference-list {
-                display: none; /* Oculta la lista de referencia en pantallas pequeñas */
-            }
-        }
+#image-container img {
+    width: 100%;
+    height: auto;
+}
+
+.point {
+    position: absolute;
+    background-color: rgb(88, 161, 239); /* Tono celeste */
+    color: white;
+    border-radius: 50%;
+    width: 2vw; /* Tamaño base del punto */
+    height: 2vw; /* Tamaño base del punto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1em; /* Usa em para escalar con el contenedor */
+    box-shadow: 0 0 15px rgb(57, 109, 165); /* Borde irradiado en tono celeste más visible */
+    z-index: 10; /* Asegura que el punto esté por encima de otros elementos */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+.point:hover {
+    background-color: rgb(57, 109, 165);
+    box-shadow: 0 0 25px rgb(57, 109, 165);
+    transform: scale(1.1); /* Escala ligeramente el punto en hover */
+}
+
+.highlight {
+    background-color: rgb(57, 109, 165);
+    color: white;
+    transition: background-color 0.3s ease; /* Transición suave para el resaltado */
+}
+
+#reference-list {
+    position: absolute;
+    bottom: 1vw;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo más transparente */
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    list-style: none;
+    margin: 0;
+    width: calc(100% - 1vw); /* Ajusta el ancho para que no se desborde */
+    max-height: 20vh; /* Altura máxima para la lista */
+    overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
+    overflow-y: hidden; /* Evita el scroll vertical */
+    white-space: normal; /* Permite el ajuste de línea para varias filas */
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
+    gap: 0.5vw; /* Espacio entre los elementos de la lista */
+    transition: opacity 0.3s ease; /* Transición suave para la opacidad */
+}
+
+#reference-list li {
+    display: inline-flex; /* Mantiene los elementos alineados horizontalmente en cada fila */
+    padding: 0.5vw 1vw; /* Aumenta la separación para una mejor legibilidad */
+    cursor: pointer;
+    color: white; /* Color del texto en blanco */
+    transition: background-color 0.3s ease;
+    font-size: 0.3em; /* Tamaño de letra más pequeño */
+    border-radius: 0.3vw; /* Bordes redondeados para los elementos */
+}
+
+#reference-list li:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Aumenta la visibilidad del hover con más transparencia */
+}
+
+@media (max-width: 768px) {
+    .point {
+        display: none;
+    }
+    #reference-list {
+        display: none; /* Oculta la lista de referencia en pantallas pequeñas */
+    }
+}
 
     </style>
 </head>
@@ -169,13 +184,9 @@
                         point.style.color = 'white';
                     });
                 }
-        
-
-        
             });
         </script>
-        
-        
     </div>
 </body>
 </html>
+
