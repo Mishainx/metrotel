@@ -3,18 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Image with Points</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Interactive Map</title>
+    <style>
+        /* Estilos CSS */
+        #image-container {
+            position: relative;
+            width: 100%;
+            max-width: 1920px;
+            background-color: #f0f0f0; /* Fondo temporal para verificar visibilidad */
+        }
+        #image-container img {
+            width: 100%;
+            height: auto;
+        }
+        .point {
+            position: absolute;
+            background-color: rgb(88, 161, 239); /* Tono celeste */
+            color: white;
+            border-radius: 50%;
+            width: 2vw; /* Tamaño base del punto */
+            height: 2vw; /* Tamaño base del punto */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1em; /* Usa em para escalar con el contenedor */
+            box-shadow: 0 0 15px rgb(57, 109, 165); /* Borde irradiado en tono celeste más visible */
+            z-index: 10; /* Asegura que el punto esté por encima de otros elementos */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transición suave */
+        }
+        .point:hover {
+            background-color: rgb(57, 109, 165);
+            box-shadow: 0 0 25px rgb(57, 109, 165);
+            transform: scale(1.1); /* Escala ligeramente el punto en hover */
+        }
+        .highlight {
+            background-color: rgb(57, 109, 165);
+            color: white;
+            transition: background-color 0.3s ease; /* Transición suave para el resaltado */
+        }
+        #reference-list {
+            position: absolute;
+            top: 1vw;
+            right: 2.5vw;
+            background-color: rgba(0, 0, 0, 0); /* Fondo transparente */
+            padding: 0.2vw;
+            border-radius: 0.5vw;
+            list-style: none;
+            margin: 0;
+            font-size: 0.3em; /* Tamaño de letra más pequeño usando em */
+            max-height: 20vh; /* Altura máxima para la lista */
+            transition: opacity 0.3s ease; /* Transición suave para la opacidad */
+        }
+        #reference-list li {
+            padding: 0.1vw 0.2vw; /* Menos separación */
+            cursor: pointer;
+            color: white; /* Color del texto en blanco */
+            transition: background-color 0.3s ease;
+            font-size: 0.1em; 
+        }
+        #reference-list li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .point {
+                width: 4vw; /* Ajusta el tamaño del punto para pantallas pequeñas */
+                height: 4vw; /* Ajusta el tamaño del punto para pantallas pequeñas */
+                font-size: 0.8em; /* Ajusta el tamaño de la fuente */
+            }
+            #reference-list {
+                display: none; /* Oculta la lista de referencia en pantallas pequeñas */
+            }
+        }
+
+    </style>
 </head>
 <body>
-    <div id="image-container">
-        <img id="interactive-image" src="./metrotel.jpg" alt="Interactive Image">
-        <ul id="reference-list">
-            <li data-point="0">1- Ubicación 1</li>
-            <li data-point="1">2- Ubicación 2</li>
-            <li data-point="2">3- Ubicación 3</li>
-        </ul>
+    <div id="custom-container">
+        <div id="image-container">
+            <img id="interactive-image" src="./metrotel.jpg" alt="Interactive Image">
+            <ul id="reference-list">
+                <li data-point="0">1. ArSat</li>
+                <li data-point="1">2. CABASE</li>
+                <li data-point="2">3. Cirion</li>
+                <li data-point="3">4. Claro</li>
+                <li data-point="4">5. DXC(EDS/HPE)</li>
+                <li data-point="5">6. EdgeConnex</li>
+                <li data-point="6">7. Gigared</li>
+                <li data-point="7">8. IFX Networks/UFINet</li>
+                <li data-point="8">9. Iplan</li>
+                <li data-point="9">10. Kyndryl(IBM)</li>
+                <li data-point="10">11. Nabiax / Actis</li>
+                <li data-point="11">12. Sencinet (BT)</li>
+                <li data-point="12">13. Silica (Datco)</li>
+                <li data-point="13">14. Sky Online</li>
+                <li data-point="14">15. Telecom (Belgrano)</li>
+                <li data-point="15">16. Telecom (Coghlan)</li>
+                <li data-point="16">17. Telecom (Cubecorp)</li>
+                <li data-point="17">18. Telecom (Hornos)</li>
+                <li data-point="18">19. Telefónica (Cuyo)</li>
+                <li data-point="19">20. Telxius (Telefónica)</li>
+            </ul>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const imageContainer = document.getElementById('image-container');
+                const referenceList = document.getElementById('reference-list').children;
+    
+        
+                function addPoint(xPercent, yPercent, index) {
+                    const point = document.createElement('div');
+                    point.classList.add('point');
+                    point.style.left = `${xPercent}%`;
+                    point.style.top = `${yPercent}%`;
+                    point.dataset.index = index;
+                    point.textContent = index + 1;
+        
+                    point.addEventListener('mouseenter', () => {
+                        for (let i = 0; i < referenceList.length; i++) {
+                            referenceList[i].classList.remove('highlight');
+                        }
+                        referenceList[index].classList.add('highlight');
+                    });
+        
+                    point.addEventListener('mouseleave', () => {
+                        referenceList[index].classList.remove('highlight');
+                    });
+        
+                    imageContainer.appendChild(point);
+                }
+        
+                // Ejemplo de ubicaciones. Añadir 20 ubicaciones reales
+                addPoint(55, 8, 0);
+                addPoint(82, 45, 1);
+                addPoint(76, 43, 2);
+                addPoint(78, 41, 3);
+                addPoint(75.7, 31.5, 4);
+                addPoint(42, 17, 5);
+                addPoint(75, 40, 6);
+                addPoint(81, 48.5, 7);
+                addPoint(81.5, 52, 8);
+                addPoint(70, 22.5, 9);
+                addPoint(82, 55, 10);
+                addPoint(88.5, 60, 11);
+                addPoint(83, 41, 12);
+                addPoint(83.5, 44, 13);
+                addPoint(77, 36, 14);
+                addPoint(75, 35, 15);
+                addPoint(58.5, 18.1, 16);
+                addPoint(83.7, 47.7, 17);
+                addPoint(80, 45.8, 18);
+                addPoint(83.8, 51.5, 19);
+        
+                for (let i = 0; i < referenceList.length; i++) {
+                    referenceList[i].addEventListener('mouseenter', function () {
+                        const pointIndex = this.dataset.point;
+                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                        point.style.color = 'black';
+                    });
+        
+                    referenceList[i].addEventListener('mouseleave', function () {
+                        const pointIndex = this.dataset.point;
+                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                        point.style.color = 'white';
+                    });
+                }
+        
+
+        
+            });
+        </script>
+        
+        
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
