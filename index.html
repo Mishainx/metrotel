@@ -50,8 +50,8 @@
 
         #reference-list {
             position: absolute;
-            top: 1.3vw;
-            right: 1.5vw;
+            top: 1.5vw;
+            right: 2vw;
             list-style: none;
             margin: 0;
             width: auto;
@@ -66,7 +66,7 @@
             cursor: pointer;
             color: white; /* Color del texto en blanco */
             transition: background-color 0.2s all;
-            font-size: 0.6em; /* Tamaño de letra más pequeño */
+            font-size: 0.7em; /* Tamaño de letra más pequeño */
             border-radius: 0.3vw; /* Bordes redondeados para los elementos */
             font-weight: bold;
         }
@@ -75,6 +75,12 @@
             background-color: rgb(57, 109, 165,0.7); /* Aumenta la visibilidad del hover con más transparencia */
         }
 
+                /* Media Queries */
+        @media (max-width: 1500px) {
+            #reference-list li {
+            font-size: 0.6em; /* Tamaño de letra más pequeño */
+        }
+        }
         /* Media Queries */
         @media (max-width: 1200px) {
             #reference-list li {
@@ -96,7 +102,7 @@
             }
         }
 
-        @media (max-width: 870px) {
+        @media (max-width: 914px) {
             #reference-list li {
             font-size: 0.43em; /* Tamaño de letra más pequeño */
             }
@@ -104,7 +110,7 @@
 
         @media (max-width: 830px) {
             #reference-list li {
-            font-size: 0.44em; /* Tamaño de letra más pequeño */
+            font-size: 0.42em; /* Tamaño de letra más pequeño */
             }
             .point{
                 font-size: 0.7em; /* Tamaño de letra más pequeño */
@@ -119,14 +125,14 @@
 
         @media (max-width: 790px) {
             #reference-list li {
-            font-size: 0.39em; /* Tamaño de letra más pequeño */
+            font-size: 0.37em; /* Tamaño de letra más pequeño */
             }
             .point{
                 font-size: 0.6em; /* Tamaño de letra más pequeño */
             }
         }
 
-        @media (max-width: 716px) {
+        @media (max-width: 740px) {
             #reference-list li {
             font-size: 0.36em; /* Tamaño de letra más pequeño */
             }
@@ -142,15 +148,15 @@
             }
         }
 
-        @media (max-width: 646px) {
+        @media (max-width: 660px) {
             #reference-list li {
-            font-size: 0.33em; /* Tamaño de letra más pequeño */
+            font-size: 0.32em; /* Tamaño de letra más pequeño */
             }
         }
 
         @media (max-width: 594px) {
             #reference-list li {
-            font-size: 0.32em; /* Tamaño de letra más pequeño */
+            font-size: 0.30em; /* Tamaño de letra más pequeño */
             }
             .point{
                 font-size: 0.30em; /* Tamaño de letra más pequeño */
