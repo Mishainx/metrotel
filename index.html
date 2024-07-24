@@ -41,10 +41,16 @@
             transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, color 0.3s ease, z-index 0.3s ease;
         }
 
-        .point.highlight {
+        .point:hover {
+            background-color: #2ea3f2;
+            transform: scale(1.5);
+        }
+
+        .highlight {
             background-color: #58b9e2;
             color: white;
-            transform: scale(1.15); /* Igualar la escala del hover en el reference-list */
+            transform: scale(1.05);
+            transition: transform 600ms ease;
         }
 
         #reference-list {
@@ -69,12 +75,21 @@
             color: white;
             font-size: 1.1em;
             line-height: 1.2em;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease, transform 600ms ease;
         }
 
         #reference-list li:hover {
             background-color: #009FE3;
-            transform: scale(1.3); /* La escala del hover en el reference-list */
+            transform: scale(1.3);
+        }
+
+            #reference-list.highlighted {
+        transform: scale(1.1); /* Escalar el reference-list al mismo tiempo que los puntos */
+        transition: transform 0.3s ease;
+    }
+
+        .scaled {
+            transform: scale(1.1); /* Scale to half of 1.15 (1.075) */
         }
 
         @media (max-width: 1600px) {
@@ -195,7 +210,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const imageContainer = document.getElementById('image-container');
-                const referenceListItems = Array.from(document.getElementById('reference-list').children);
+                const referenceList = document.getElementById('reference-list').children;
 
                 function addPoint(xPercent, yPercent, index) {
                     const point = document.createElement('div');
@@ -206,15 +221,14 @@
                     point.textContent = index + 1;
 
                     point.addEventListener('mouseenter', () => {
-                        const listItem = referenceListItems[index];
-                        listItem.classList.add('highlight');
+                        Array.from(referenceList).forEach(item => item.classList.remove('highlight'));
+                        referenceList[index].classList.add('highlight');
                         point.style.zIndex = '20';
                         point.style.transitionDelay = '0.1s';
                     });
 
                     point.addEventListener('mouseleave', () => {
-                        const listItem = referenceListItems[index];
-                        listItem.classList.remove('highlight');
+                        referenceList[index].classList.remove('highlight');
                         point.style.zIndex = '10';
                         point.style.transitionDelay = '0s';
                     });
@@ -232,22 +246,37 @@
                 
                 locations.forEach((loc, index) => addPoint(loc[0], loc[1], index));
 
-                referenceListItems.forEach((item, index) => {
+                Array.from(referenceList).forEach((item, index) => {
                     item.addEventListener('mouseenter', function () {
-                        const point = document.querySelector(`.point[data-index="${index}"]`);
-                        if (point) {
-                            point.classList.add('highlight');
-                            point.style.zIndex = '20';
-                            point.style.transitionDelay = '0.1s';
+                        const pointIndex = this.dataset.point;
+                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                        point.style.zIndex = '20';
+                        point.style.transitionDelay = '0.1s';
+
+                        this.classList.add('highlight');
+
+                        if (index > 0) {
+                            referenceList[index - 1].classList.add('scaled');
+                        }
+                        if (index < referenceList.length - 1) {
+                            referenceList[index + 1].classList.add('scaled');
                         }
                     });
 
                     item.addEventListener('mouseleave', function () {
-                        const point = document.querySelector(`.point[data-index="${index}"]`);
-                        if (point) {
-                            point.classList.remove('highlight');
-                            point.style.zIndex = '10';
-                            point.style.transitionDelay = '0s';
+                        const pointIndex = this.dataset.point;
+                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                        point.style.color = 'white';
+                        point.style.zIndex = '10';
+                        point.style.transitionDelay = '0s';
+
+                        this.classList.remove('highlight');
+
+                        if (index > 0) {
+                            referenceList[index - 1].classList.remove('scaled');
+                        }
+                        if (index < referenceList.length - 1) {
+                            referenceList[index + 1].classList.remove('scaled');
                         }
                     });
                 });
