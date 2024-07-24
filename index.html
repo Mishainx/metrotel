@@ -71,7 +71,7 @@
             border: 1;
             border-radius: 1%;
             font-family: 'Poppins', sans-serif;
-            background-color: #009FE3;
+            background: linear-gradient(to right, #009FE3, rgba(0, 159, 227, 0.1) 45%);
         }
 
         #reference-list li {
@@ -305,8 +305,6 @@
                         referenceList[index].classList.add('highlight');
                         point.style.zIndex = '20'; // Trae el punto al frente
                         point.style.transitionDelay = '0.1s';
-                        point.style.transform = 'scale(1.5)';
-                        point.style.transition = 'transform 0.3s'; 
                     });
 
                     point.addEventListener('mouseleave', () => {
