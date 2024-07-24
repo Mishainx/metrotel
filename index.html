@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Estilos CSS */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
         #image-container {
             position: relative;
             width: 100%;
             max-width: 1920px;
-            background-color: #f0f0f0; /* Fondo temporal para verificar visibilidad */
-            overflow: hidden; /* Asegura que nada se desborde del contenedor */
+            background-color: #f0f0f0; 
+            overflow: hidden;
         }
 
         #image-container img {
@@ -21,233 +26,277 @@
 
         .point {
             position: absolute;
-            background-color: rgb(88, 161, 239); /* Tono celeste */
+            background-color: #009FE3; /* Tono celeste */
+            box-shadow: 0px 0 4px 4px rgba(1, 230, 238, 0.9); /* Sombra celeste más clara */
             color: white;
             border-radius: 50%;
-            width: 1.8vw; /* Tamaño base del punto */
-            height: 1.8vw; /* Tamaño base del punto */
+            width: 1.6vw; /* Tamaño base del punto */
+            height: 1.6vw; /* Tamaño base del punto */
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 1em; /* Usa em para escalar con el contenedor */
-            box-shadow: 0 0 15px rgb(57, 109, 165); /* Borde irradiado en tono celeste más visible */
+            font-size: 0.9em; /* Usa em para escalar con el contenedor */
+            font-weight: 500;
             z-index: 10; /* Asegura que el punto esté por encima de otros elementos */
-            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transición suave */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, color 0.3s ease, z-index 0.3s ease; /* Transición suave */
+            font-family: 'Poppins', sans-serif;
         }
 
         .point:hover {
-            background-color: rgb(57, 109, 165);
-            box-shadow: 0 0 25px rgb(57, 109, 165);
+            background-color: #2ea3f2;
             transform: scale(1.1); /* Escala ligeramente el punto en hover */
         }
 
         .highlight {
-            background-color: rgb(57, 109, 165);
+            background-color: #009FE3;
             color: white;
             transition: background-color 0.3s ease; /* Transición suave para el resaltado */
         }
 
         #reference-list {
+            padding: 10px;
             position: absolute;
-            top: 1.5vw;
-            right: 2vw;
+            top: 0.7vw;
+            right: 6vw;
             list-style: none;
-            margin: 0;
-            width: auto;
             max-height: 100vh; /* Altura máxima para la lista */
             display: flex;
-            flex-direction: column; /* Coloca los elementos en forma de columna */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Coloca los elementos en forma de columna */
             transition: opacity 0.3s all; /* Transición suave para la opacidad */
+            border: 1;
+            border-radius: 1%;
+            font-family: 'Poppins', sans-serif;
         }
 
         #reference-list li {
-            padding: 0.2vw; /* Aumenta la separación para una mejor legibilidad */
+            width: 100%;
             cursor: pointer;
-            color: white; /* Color del texto en blanco */
+            color: rgb(255, 255, 255);
             transition: background-color 0.2s all;
-            font-size: 0.8em; /* Tamaño de letra más pequeño */
+            font-size: 1.2em; /* Tamaño de letra más pequeño */
             border-radius: 0.3vw; /* Bordes redondeados para los elementos */
-            font-weight: bold;
+            font-weight:0;
+            line-height: 1.3em;
+            
         }
 
         #reference-list li:hover {
-            background-color: rgb(57, 109, 165,0.7); /* Aumenta la visibilidad del hover con más transparencia */
+            background-color:#009FE3;
         }
 
-                /* Media Queries */
-        @media (max-width: 1500px) {
-            #reference-list li {
-            font-size: 0.6em; /* Tamaño de letra más pequeño */
-        }
-        }
-        /* Media Queries */
-        @media (max-width: 1200px) {
-            #reference-list li {
-            font-size: 0.55em; /* Tamaño de letra más pequeño */
+                /* Media queries para ajustar el tamaño de fuente */
+            @media (max-width: 1600px) {
+            .point {
+                font-size: 0.8em;
             }
-        }
+            #reference-list li{
+                font-size: 1.1em;
+            }}
 
-                /* Media Queries */
-            @media (max-width: 1100px) {
-            #reference-list li {
-            font-size: 0.5em; /* Tamaño de letra más pequeño */
+            @media (max-width: 1250px) {
+            .point {
+                font-size: 0.7em;
             }
-        }
+            #reference-list li{
+                font-size: 1.0em;
+            }}
 
-        @media (max-width: 950px) {
-            #reference-list li {
-            font-size: 0.49em; /* Tamaño de letra más pequeño */
-            padding: 0.19vw;
-            }
-        }
+             @media (max-width: 1250px) {
+            .point {
+                font-size: 0.65em;
+                box-shadow: 0px 0 3px 3px rgba(1, 230, 238, 0.9); /* Sombra celeste más clara */
 
-        @media (max-width: 914px) {
-            #reference-list li {
-            font-size: 0.43em; /* Tamaño de letra más pequeño */
             }
-        }
+            #reference-list li{
+                font-size: 0.9em;
+                line-height:1.2em ;
+            }}
 
-        @media (max-width: 830px) {
-            #reference-list li {
-            font-size: 0.42em; /* Tamaño de letra más pequeño */
-            }
-            .point{
-                font-size: 0.7em; /* Tamaño de letra más pequeño */
-            }
-        }
+            @media (max-width: 983px) {
+            .point {
+                font-size: 0.6em;
+                box-shadow: 0px 0 2px 2px rgba(1, 230, 238, 0.9); /* Sombra celeste más clara */
 
-        @media (max-width: 802px) {
-            #reference-list li {
-            font-size: 0.40em; /* Tamaño de letra más pequeño */
             }
-        }
+            #reference-list li{
+                font-size: 0.8em;
+                line-height:1.1em ;
+            }}
 
-        @media (max-width: 790px) {
-            #reference-list li {
-            font-size: 0.37em; /* Tamaño de letra más pequeño */
+            
+            @media (max-width: 820px) {
+            .point {
+                font-size: 0.5em;
             }
-            .point{
-                font-size: 0.6em; /* Tamaño de letra más pequeño */
-            }
-        }
+            #reference-list li{
+                font-size: 0.7em;
+                line-height:1.1em ;
+            }}
 
-        @media (max-width: 740px) {
-            #reference-list li {
-            font-size: 0.36em; /* Tamaño de letra más pequeño */
+            @media (max-width: 720px) {
+            .point {
+                font-size: 0.4em;
             }
-        }
+            #reference-list li{
+                font-size: 0.65em;
+                line-height:1.1em ;
+            }}
 
-        @media (max-width: 690px) {
-            #reference-list li {
-            font-size: 0.35em; /* Tamaño de letra más pequeño */
-            padding: 0.15vw;
+            @media (max-width: 682px) {
+            .point {
+                font-size: 0.37em;
             }
-            .point{
-                font-size: 0.6em; /* Tamaño de letra más pequeño */
+            #reference-list {
+                top: 0.2vw;
+                right: 1vw;
             }
-        }
+            #reference-list li{
+                font-size: 0.60em;
+                line-height:1.1em ;
+            }}
 
-        @media (max-width: 660px) {
-            #reference-list li {
-            font-size: 0.32em; /* Tamaño de letra más pequeño */
+            @media (max-width: 619px) {
+            .point {
+                font-size: 0.35em;
             }
-        }
+            #reference-list li{
+                font-size: 0.55em;
+                line-height:1.1em ;
+            }}
 
-        @media (max-width: 594px) {
-            #reference-list li {
-            font-size: 0.30em; /* Tamaño de letra más pequeño */
+            
+            @media (max-width: 577px) {
+            .point {
+                font-size: 0.35em;
             }
-            .point{
-                font-size: 0.45em; /* Tamaño de letra más pequeño */
-            }
-        }
+            #reference-list li{
+                font-size: 0.50em;
+                line-height:1.1em ;
+            }}
 
-        @media (max-width: 584px) {
-            #reference-list li {
-            font-size: 0.30em;
-            padding: 0.13vw;
+            @media (max-width: 537px) {
+            .point {
+                font-size: 0.35em;
             }
-        }
+            #reference-list li{
+                font-size: 0.47em;
+                line-height:1em ;
+            }}
 
-        @media (max-width: 504px) {
-            #reference-list li {
-            padding: 0.11vw;
+            @media (max-width: 475px) {
+            .point {
+                font-size: 0.33em;
             }
-        }
+            #reference-list li{
+                font-size: 0.45em;
+                line-height:1em ;
+            }}
 
-        @media (max-width: 490px) {
-            #reference-list li {
-            font-size:0.27em ;
-            padding: 0.10vw;
+            @media (max-width: 475px) {
+            .point {
+                font-size: 0.32em;
             }
-        }
+            #reference-list li{
+                font-size: 0.4em;
+                line-height:1em ;
+            }}
 
-        @media (max-width: 432px) {
-            #reference-list li {
-            font-size:0.23em ;
-            padding: 0.09vw;
+            @media (max-width: 400px) {
+            .point {
+                font-size: 0.31em;
             }
-        }
+            #reference-list li{
+                font-size: 0.38em;
+                line-height:1em ;
+            }}
 
-        @media (max-width: 416px) {
-            #reference-list li {
-            font-size:0.22em ;
-            padding: 0.08vw;
+            @media (max-width:382px) {
+            .point {
+                font-size: 0.30em;
             }
-        }
+            #reference-list li{
+                font-size: 0.35em;
+                line-height:1em ;
+            }}
 
-        @media (max-width: 370px) {
-            #reference-list li {
-            font-size:0.21em ;
-            padding: 0.07vw;
+            @media (max-width:355px) {
+            .point {
+                font-size: 0.30em;
             }
-        }
+            #reference-list{
+                top:-2vw;
 
-        @media (max-width: 352px) {
-            #reference-list li {
-            font-size:0.20em ;
-            padding: 0.06vw;
             }
-        }
+            #reference-list li{
+                font-size: 0.34em;
+                line-height:1em ;
+            }}
 
-
-        
-        @media (max-width: 348px) {
-            #reference-list li {
-            font-size:0.15em ;
-            padding: 0.06vw;
+            @media (max-width:333px) {
+            .point {
+                font-size: 0.30em;
             }
-        }
+            #reference-list{
+                top:-3vw;
 
-        @media (max-width: 290px) {
-            #reference-list li {
-            font-size:0.13em ;
-            padding: 0.04vw;
             }
-        }
+            #reference-list li{
+                font-size: 0.30em;
+                line-height:1em ;
+            }}
 
-        @media (max-width: 270px) {
-            #reference-list li {
-            font-size:0.12em ;
-            padding: 0.03vw;
-            }
-        }
 
-        @media (max-width: 230px) {
-            #reference-list li {
-            font-size:0.11em ;
-            padding: 0.02vw;
+            @media (max-width:296px) {
+            .point {
+                font-size: 0.29em;
             }
-        }
+            #reference-list{
+                top:-3vw;
+
+            }
+            #reference-list li{
+                font-size: 0.25em;
+                line-height:1em ;
+            }}
+
+            
+            @media (max-width:265px) {
+            .point {
+                font-size: 0.29em;
+            }
+            #reference-list{
+                top:-3vw;
+
+            }
+            #reference-list li{
+                font-size: 0.2em;
+                line-height:1em ;
+            }}
+
+            @media (max-width:230px) {
+            .point {
+                font-size: 0.29em;
+            }
+            #reference-list{
+                top:-3vw;
+
+            }
+            #reference-list li{
+                font-size: 0.15em;
+                line-height:1em ;
+            }}
+
+
+
     </style>
 </head>
 <body>
     <div id="custom-container">
         <div id="image-container">
-            <img id="alternative-image" src="./metrotel.jpg" alt="Interactive Image" style="display: none;">
-
-            <img id="interactive-image" src="./metrotel.jpg" alt="Interactive Image">
+            <img id="interactive-image" src="./parallax_metrotel.jpg" alt="Interactive Image">
             <ul id="reference-list">
                 <li data-point="0">1. ArSat</li>
                 <li data-point="1">2. CABASE</li>
@@ -275,7 +324,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 const imageContainer = document.getElementById('image-container');
                 const referenceList = document.getElementById('reference-list').children;
-    
+
                 function addPoint(xPercent, yPercent, index) {
                     const point = document.createElement('div');
                     point.classList.add('point');
@@ -283,54 +332,62 @@
                     point.style.top = `${yPercent}%`;
                     point.dataset.index = index;
                     point.textContent = index + 1;
-        
+
                     point.addEventListener('mouseenter', () => {
                         for (let i = 0; i < referenceList.length; i++) {
                             referenceList[i].classList.remove('highlight');
                         }
                         referenceList[index].classList.add('highlight');
+                        point.style.zIndex = '20'; // Trae el punto al frente
+                        point.style.transitionDelay = '0.1s';
                     });
-        
+
                     point.addEventListener('mouseleave', () => {
                         referenceList[index].classList.remove('highlight');
+                        point.style.zIndex = '10'; // Restaura el z-index original
+                        point.style.transitionDelay = '0s';
                     });
-        
+
                     imageContainer.appendChild(point);
                 }
-        
+
                 // Ejemplo de ubicaciones. Añadir 20 ubicaciones reales
-                addPoint(55, 8, 0);
-                addPoint(82, 45, 1);
-                addPoint(76, 43, 2);
-                addPoint(78, 41, 3);
-                addPoint(75.7, 31.5, 4);
-                addPoint(42, 17, 5);
-                addPoint(75, 40, 6);
-                addPoint(81, 48.5, 7);
-                addPoint(81.5, 52, 8);
-                addPoint(70, 22.5, 9);
-                addPoint(82, 55, 10);
-                addPoint(88.5, 60, 11);
-                addPoint(83, 41, 12);
-                addPoint(83.5, 44, 13);
-                addPoint(77, 36, 14);
-                addPoint(75, 35, 15);
-                addPoint(58.5, 18.1, 16);
-                addPoint(83.7, 47.7, 17);
-                addPoint(80, 45.8, 18);
-                addPoint(83.8, 51.5, 19);
-        
+                addPoint(29.5, 17, 0);
+                addPoint(54.5, 51.2, 1);
+                addPoint(48.7, 50, 2);
+                addPoint(50.2, 47, 3);
+                addPoint(48.4, 39.5, 4);
+                addPoint(17.1, 25.4, 5);
+                addPoint(48.3, 47, 6);
+                addPoint(54, 54.5, 7);
+                addPoint(54.5, 57.2, 8);
+                addPoint(43.5, 31, 9);
+                addPoint(54.5, 60.2, 10);
+                addPoint(60.5, 66, 11);
+                addPoint(55.9, 49.5, 12);
+                addPoint(55.8, 52.3, 13);
+                addPoint(49.5, 42.8, 14);
+                addPoint(47.9, 42.2, 15);
+                addPoint(33.1, 26.3, 16);
+                addPoint(56, 55.2, 17);
+                addPoint(53.2, 51.8, 18);
+                addPoint(56, 58.1, 19);
+
                 for (let i = 0; i < referenceList.length; i++) {
                     referenceList[i].addEventListener('mouseenter', function () {
                         const pointIndex = this.dataset.point;
                         const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
                         point.style.color = 'black';
+                        point.style.zIndex = '20'; // Trae el punto al frente
+                        point.style.transitionDelay = '0.1s';
                     });
-        
+
                     referenceList[i].addEventListener('mouseleave', function () {
                         const pointIndex = this.dataset.point;
                         const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
                         point.style.color = 'white';
+                        point.style.zIndex = '10'; // Restaura el z-index original
+                        point.style.transitionDelay = '0s';
                     });
                 }
             });
