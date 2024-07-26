@@ -10,7 +10,7 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        #image-container {
+        #image-container, #alternative-image-container {
             position: relative;
             width: 100%;
             max-width: 1920px;
@@ -18,7 +18,7 @@
             overflow: hidden;
         }
 
-        #image-container img {
+        #image-container img, #alternative-image-container img {
             width: 100%;
             height: auto;
         }
@@ -87,154 +87,25 @@
             transform: scale(1.1); /* Scale to half of 1.15 (1.075) */
         }
 
-        @media (max-width: 1600px) {
-            .point { font-size: 0.7em; }
-            #reference-list li { font-size: 0.8em; }
-        }
-
-        @media (max-width: 1450px) {
-            .point { font-size: 0.6em; }
-            #reference-list li { font-size: 0.75em;
+        @media (max-width: 640px) {
+            #image-container {
+                display: none;
             }
-        }
 
-        @media (max-width: 1300px) {
-            .point { 
-                font-size: 0.55em;
-                box-shadow: 0 0 3px 3px rgba(1, 230, 238, 0.9);
-            }
-            #reference-list li { 
-                font-size: 0.7em;
+            #alternative-image-container {
+                display: block;
             }
         }
 
-        @media (max-width: 1200px) {
-            .point { 
-                font-size: 0.5em;
+        @media (min-width: 641px) {
+            #alternative-image-container {
+                display: none;
             }
 
-            #reference-list li { 
-                padding: 3px 6px;
+            #image-container {
+                display: block;
             }
         }
-
-        @media (max-width: 1100px) {
-            .point {
-                font-size: 0.45em;
-                box-shadow: 0 0 2px 2px rgba(1, 230, 238, 0.9);
-            }
-            #reference-list li { 
-                font-size: 0.63em;
-            }
-        }
-
-        @media (max-width: 1000px) {
-            .point {
-                font-size: 0.4em;
-                box-shadow: 0 0 2px 2px rgba(1, 230, 238, 0.9);
-            }
-            #reference-list {
-                top: 1vw;
-                right: 3vw;
-            }
-            #reference-list li { 
-                font-size: 0.58em;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .point {
-                font-size: 0.4em;
-            }
-            #reference-list {
-                top: 1vw;
-                right: 3vw;
-            }
-            #reference-list li { 
-                font-size: 0.5em;
-            }
-        }
-
-        @media (max-width: 850px) {
-            .point {
-                font-size: 0.3em;
-            }
-            #reference-list {
-                top: 1vw;
-                right: 3vw;
-            }
-            #reference-list li { 
-                font-size: 0.45em;
-            }
-        }
-
-        @media (max-width: 800px) {
-            .point {
-                font-size: 0.17em;
-                box-shadow: 0 0 1px 1px rgba(1, 230, 238, 0.9);
-
-            }
-            #reference-list li { 
-                font-size: 0.4em;
-            }
-        }
-
-        @media (max-width: 750px) {
-            .point {
-                font-size: 5px;
-            }
-            #reference-list li { 
-                font-size: 0.37em;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .point {
-                font-size: 4px;
-            }
-            #reference-list li { 
-                font-size: 0.33em;
-            }
-        }
-
-        @media (max-width: 650px) {
-            .point {
-                font-size: 3px;
-            }
-            #reference-list li { 
-                padding: 2px 4px;
-                font-size: 0.30em;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .point {
-                font-size: 3px;
-            }
-            #reference-list li { 
-                font-size: 0.2em;
-            }
-        }
-
-        @media (max-width: 550px) {
-            .point {
-                font-size: 3px;
-            }
-            #reference-list li { 
-                font-size: 0.1em;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .point {
-                font-size: 3px;
-            }
-            #reference-list li { 
-                font-size: 0.08em;
-            }
-        }
-
-
     </style>
 </head>
 <body>
@@ -264,81 +135,84 @@
                 <li data-point="19">20. Telxius (Telefónica)</li>
             </ul>
         </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const imageContainer = document.getElementById('image-container');
-                const referenceList = document.getElementById('reference-list').children;
+        <div id="alternative-image-container">
+            <img src="./metrotel-mapa-alternativo.jpg" alt="Alternative Image">
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageContainer = document.getElementById('image-container');
+            const referenceList = document.getElementById('reference-list').children;
 
-                function addPoint(xPercent, yPercent, index) {
-                    const point = document.createElement('div');
-                    point.classList.add('point');
-                    point.style.left = `${xPercent}%`;
-                    point.style.top = `${yPercent}%`;
-                    point.dataset.index = index;
-                    point.textContent = index + 1;
+            function addPoint(xPercent, yPercent, index) {
+                const point = document.createElement('div');
+                point.classList.add('point');
+                point.style.left = `${xPercent}%`;
+                point.style.top = `${yPercent}%`;
+                point.dataset.index = index;
+                point.textContent = index + 1;
 
-                    point.addEventListener('mouseenter', () => {
-                        Array.from(referenceList).forEach(item => item.classList.remove('highlight'));
-                        referenceList[index].classList.add('highlight');
-                        point.style.zIndex = '20';
-                        point.style.transitionDelay = '0.1s';
-                    });
+                point.addEventListener('mouseenter', () => {
+                    Array.from(referenceList).forEach(item => item.classList.remove('highlight'));
+                    referenceList[index].classList.add('highlight');
+                    point.style.zIndex = '20';
+                    point.style.transitionDelay = '0.1s';
+                });
 
-                    point.addEventListener('mouseleave', () => {
-                        referenceList[index].classList.remove('highlight');
-                        point.style.zIndex = '10';
-                        point.style.transitionDelay = '0s';
-                    });
+                point.addEventListener('mouseleave', () => {
+                    referenceList[index].classList.remove('highlight');
+                    point.style.zIndex = '10';
+                    point.style.transitionDelay = '0s';
+                });
 
-                    imageContainer.appendChild(point);
-                }
+                imageContainer.appendChild(point);
+            }
 
-                // Ejemplo de ubicaciones
-                const locations = [
-                    [30.8, 17.5], [61.9, 57.2], [54.7, 57.3], [57, 53], [54.2, 44],
-                    [15.3, 29.1], [53.5, 53], [61.4, 61.9], [62, 66.4], [48.1, 33],
-                    [62, 71], [69.3, 77.5], [63.4, 55.1], [63.4, 59.9], [55.3, 48.9],
-                    [53.2, 48.7], [35.1, 27.6], [63.6, 64.7], [60.3, 59.5], [64, 69]
-                ];
-                
-                locations.forEach((loc, index) => addPoint(loc[0], loc[1], index));
+            // Ejemplo de ubicaciones
+            const locations = [
+                [30.8, 17.5], [61.9, 57.2], [54.7, 57.3], [57, 53], [54.2, 44],
+                [15.3, 29.1], [53.5, 53], [61.4, 61.9], [62, 66.4], [48.1, 33],
+                [62, 71], [69.3, 77.5], [63.4, 55.1], [63.4, 59.9], [55.3, 48.9],
+                [53.2, 48.7], [35.1, 27.6], [63.6, 64.7], [60.3, 59.5], [64, 69]
+            ];
+            
+            locations.forEach((loc, index) => addPoint(loc[0], loc[1], index));
 
-                Array.from(referenceList).forEach((item, index) => {
-                    item.addEventListener('mouseenter', function () {
-                        const pointIndex = this.dataset.point;
-                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
-                        point.style.zIndex = '20';
-                        point.style.transitionDelay = '0.1s';
+            Array.from(referenceList).forEach((item, index) => {
+                item.addEventListener('mouseenter', function () {
+                    const pointIndex = this.dataset.point;
+                    const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                    point.style.zIndex = '20';
+                    point.style.transitionDelay = '0.1s';
 
-                        this.classList.add('highlight');
+                    this.classList.add('highlight');
 
-                        if (index > 0) {
-                            referenceList[index - 1].classList.add('scaled');
-                        }
-                        if (index < referenceList.length - 1) {
-                            referenceList[index + 1].classList.add('scaled');
-                        }
-                    });
+                    if (index > 0) {
+                        referenceList[index - 1].classList.add('scaled');
+                    }
+                    if (index < referenceList.length - 1) {
+                        referenceList[index + 1].classList.add('scaled');
+                    }
+                });
 
-                    item.addEventListener('mouseleave', function () {
-                        const pointIndex = this.dataset.point;
-                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
-                        point.style.color = 'white';
-                        point.style.zIndex = '10';
-                        point.style.transitionDelay = '0s';
+                item.addEventListener('mouseleave', function () {
+                    const pointIndex = this.dataset.point;
+                    const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                    point.style.color = 'white';
+                    point.style.zIndex = '10';
+                    point.style.transitionDelay = '0s';
 
-                        this.classList.remove('highlight');
+                    this.classList.remove('highlight');
 
-                        if (index > 0) {
-                            referenceList[index - 1].classList.remove('scaled');
-                        }
-                        if (index < referenceList.length - 1) {
-                            referenceList[index + 1].classList.remove('scaled');
-                        }
-                    });
+                    if (index > 0) {
+                        referenceList[index - 1].classList.remove('scaled');
+                    }
+                    if (index < referenceList.length - 1) {
+                        referenceList[index + 1].classList.remove('scaled');
+                    }
                 });
             });
-        </script>
-    </div>
+        });
+    </script>
 </body>
 </html>
