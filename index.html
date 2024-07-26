@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Map</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Normalize CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            line-height: 1;
         }
 
         #image-container {
@@ -97,7 +94,8 @@
 
         @media (max-width: 1450px) {
             .point { font-size: 0.6em; }
-            #reference-list li { font-size: 0.75em; }
+            #reference-list li { font-size: 0.75em;
+            }
         }
 
         @media (max-width: 1300px) {
@@ -174,6 +172,7 @@
             .point {
                 font-size: 0.17em;
                 box-shadow: 0 0 1px 1px rgba(1, 230, 238, 0.9);
+
             }
             #reference-list li { 
                 font-size: 0.4em;
@@ -226,14 +225,16 @@
             }
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 5px) {
             .point {
                 font-size: 3px;
             }
             #reference-list li { 
-                font-size: 0.07em;
+                font-size: 0.1em;
             }
         }
+
+
     </style>
 </head>
 <body>
@@ -246,18 +247,98 @@
                 <li data-point="2">3. Cirion</li>
                 <li data-point="3">4. Claro</li>
                 <li data-point="4">5. DXC(EDS/HPE)</li>
-                <li data-point="5">6. IPLAN</li>
-                <li data-point="6">7. Lumen (Century Link / Level 3)</li>
-                <li data-point="7">8. Metrotel</li>
-                <li data-point="8">9. Nubicom</li>
-                <li data-point="9">10. SION</li>
-                <li data-point="10">11. Telefonica (Movistar)</li>
-                <li data-point="11">12. Telecom (Fibertel)</li>
-                <li data-point="12">13. Telmex</li>
-                <li data-point="13">14. IFX Networks</li>
+                <li data-point="5">6. EdgeConnex</li>
+                <li data-point="6">7. Gigared</li>
+                <li data-point="7">8. IFX Networks/UFINet</li>
+                <li data-point="8">9. Iplan</li>
+                <li data-point="9">10. Kyndryl(IBM)</li>
+                <li data-point="10">11. Nabiax / Actis</li>
+                <li data-point="11">12. Sencinet (BT)</li>
+                <li data-point="12">13. Silica (Datco)</li>
+                <li data-point="13">14. Sky Online</li>
+                <li data-point="14">15. Telecom (Belgrano)</li>
+                <li data-point="15">16. Telecom (Coghlan)</li>
+                <li data-point="16">17. Telecom (Cubecorp)</li>
+                <li data-point="17">18. Telecom (Hornos)</li>
+                <li data-point="18">19. Telefónica (Cuyo)</li>
+                <li data-point="19">20. Telxius (Telefónica)</li>
             </ul>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const imageContainer = document.getElementById('image-container');
+                const referenceList = document.getElementById('reference-list').children;
+
+                function addPoint(xPercent, yPercent, index) {
+                    const point = document.createElement('div');
+                    point.classList.add('point');
+                    point.style.left = `${xPercent}%`;
+                    point.style.top = `${yPercent}%`;
+                    point.dataset.index = index;
+                    point.textContent = index + 1;
+
+                    point.addEventListener('mouseenter', () => {
+                        Array.from(referenceList).forEach(item => item.classList.remove('highlight'));
+                        referenceList[index].classList.add('highlight');
+                        point.style.zIndex = '20';
+                        point.style.transitionDelay = '0.1s';
+                    });
+
+                    point.addEventListener('mouseleave', () => {
+                        referenceList[index].classList.remove('highlight');
+                        point.style.zIndex = '10';
+                        point.style.transitionDelay = '0s';
+                    });
+
+                    imageContainer.appendChild(point);
+                }
+
+                // Ejemplo de ubicaciones
+                const locations = [
+                    [30.8, 17.5], [61.9, 57.2], [54.7, 57.3], [57, 53], [54.2, 44],
+                    [15.3, 29.1], [53.5, 53], [61.4, 61.9], [62, 66.4], [48.1, 33],
+                    [62, 71], [69.3, 77.5], [63.4, 55.1], [63.4, 59.9], [55.3, 48.9],
+                    [53.2, 48.7], [35.1, 27.6], [63.6, 64.7], [60.3, 59.5], [64, 69]
+                ];
+                
+                locations.forEach((loc, index) => addPoint(loc[0], loc[1], index));
+
+                Array.from(referenceList).forEach((item, index) => {
+                    item.addEventListener('mouseenter', function () {
+                        const pointIndex = this.dataset.point;
+                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                        point.style.zIndex = '20';
+                        point.style.transitionDelay = '0.1s';
+
+                        this.classList.add('highlight');
+
+                        if (index > 0) {
+                            referenceList[index - 1].classList.add('scaled');
+                        }
+                        if (index < referenceList.length - 1) {
+                            referenceList[index + 1].classList.add('scaled');
+                        }
+                    });
+
+                    item.addEventListener('mouseleave', function () {
+                        const pointIndex = this.dataset.point;
+                        const point = document.querySelector(`.point[data-index="${pointIndex}"]`);
+                        point.style.color = 'white';
+                        point.style.zIndex = '10';
+                        point.style.transitionDelay = '0s';
+
+                        this.classList.remove('highlight');
+
+                        if (index > 0) {
+                            referenceList[index - 1].classList.remove('scaled');
+                        }
+                        if (index < referenceList.length - 1) {
+                            referenceList[index + 1].classList.remove('scaled');
+                        }
+                    });
+                });
+            });
+        </script>
     </div>
-    <script src="./script.js"></script>
 </body>
 </html>
