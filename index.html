@@ -90,7 +90,23 @@
             .point.scaled {
         transform: scale(1.3);
         background-color: #1c97e8;
-        }
+        animation: pulse-shadow 1.5s infinite;
+    }
+
+/* Define la animación de pulso concéntrico */
+@keyframes pulse-shadow {
+    0% {
+        box-shadow: 0 0 4px rgba(1, 230, 238, 0.9); /* Color inicial del box-shadow */
+    }
+    50% {
+        box-shadow: 0 0 12px 8px rgba(1, 230, 238, 0.9); /* Box-shadow más grande y tenue */
+    }
+    100% {
+        box-shadow: 0 0 4px rgba(1, 230, 238, 0.9); /* Regresa al valor inicial */
+    }
+}
+
+
 
 
     @media (max-width: 1400px) {
